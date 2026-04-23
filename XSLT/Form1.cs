@@ -70,7 +70,7 @@ namespace XSLT
 
             var documentElement = doc.DocumentElement;
 
-            if (documentElement == null) 
+            if (documentElement == null)
                 return;
 
             double totalAmount = 0;
@@ -96,6 +96,11 @@ namespace XSLT
                 documentElement.Attributes.Append(totalAmountAttribute);
                 doc.Save(path);
             }
+        }
+
+        private void TransformButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

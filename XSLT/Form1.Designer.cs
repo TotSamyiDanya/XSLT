@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            TransformButton = new Button();
+            SuspendLayout();
+            // 
+            // TransformButton
+            // 
+            TransformButton.Location = new Point(12, 12);
+            TransformButton.Name = "TransformButton";
+            TransformButton.Size = new Size(160, 29);
+            TransformButton.TabIndex = 0;
+            TransformButton.Text = "Преобразовать";
+            TransformButton.UseVisualStyleBackColor = true;
+            TransformButton.Click += TransformButton_Click;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Text = "Form1";
+            Controls.Add(TransformButton);
+            Name = "Form1";
+            Text = "XSLT Преобразование";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button TransformButton;
     }
 }
