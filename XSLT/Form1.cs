@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Xsl;
 
 namespace XSLT
@@ -98,11 +100,67 @@ namespace XSLT
             }
         }
 
+        public void ShowData()
+        {
+            EmployeeListBox.Items.Clear();
+            MonthDataGridView.Rows.Clear();
+
+            var doc = XDocument.Load(_outputPath);
+            var employees = doc.Descendants("Employee");
+
+            foreach (var employee in employees)
+            {
+                var name = employee.Attribute("name")?.Value ?? "";
+                var surname = employee.Attribute("surname")?.Value ?? "";
+                var sumSalary = employee.Attribute("sumSalary")?.Value ?? "0";
+
+                string displayText = $"{name} {surname} - {sumSalary}";
+                EmployeeListBox.Items.Add(displayText);
+            }
+
+            var monthsSum = new Dictionary<string, double>();
+
+            foreach (var employee in employees)
+            {
+                var salaryNodeList = employee.Elements("salary");
+                if (salaryNodeList == null)
+                    return;
+
+                foreach (var salary in salaryNodeList)
+                {
+                    var mountNode = salary.Attribute("mount");
+                    if (mountNode == null) 
+                        return;
+
+                    string mount = mountNode.Value;
+                    double amount = 0;
+
+                    if (double.TryParse(salary.Attribute("amount")?.Value.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double val))
+                        amount = val;
+
+                    if (monthsSum.ContainsKey(mount))
+                        monthsSum[mount] += amount;
+                    else
+                        monthsSum[mount] = amount;
+                }
+            }
+
+            MonthDataGridView.Columns.Clear();
+            MonthDataGridView.Columns.Add("Month", "Месяц");
+            MonthDataGridView.Columns.Add("Sum", "Сумма");
+
+            foreach (var kvp in monthsSum)
+            {
+                MonthDataGridView.Rows.Add(kvp.Key, kvp.Value);
+            }
+        }
+
         private void TransformButton_Click(object sender, EventArgs e)
         {
             TransformXML(_inputPath, _outputPath, _xsltPath);
             AddSumToEmployees(_outputPath);
             AddTotalAmountToPay(_inputPath);
+            ShowData();
         }
     }
 }
