@@ -16,41 +16,37 @@ namespace XSLT
             InitializeComponent();
         }
 
-        public void TransformXML(string inputPath, string outputPath, string xsltPath)
+        private void TransformXML(string inputPath, string outputPath, string xsltPath)
         {
             var xlst = new XslCompiledTransform();
             xlst.Load(xsltPath);
             xlst.Transform(inputPath, outputPath);
         }
 
-        public void AddSumToEmployees(string path)
+        private void AddSumToEmployees(string path)
         {
             var doc = new XmlDocument();
             doc.Load(path);
 
-            var namespaceManager = new XmlNamespaceManager(doc.NameTable);
             var employeeNodeList = doc.SelectNodes("//Employee");
-
             if (employeeNodeList == null)
                 return;
 
             foreach (XmlNode employee in employeeNodeList)
             {
                 var employeeAttributes = employee.Attributes;
-
                 if (employeeAttributes == null)
                     return;
 
                 double sum = 0;
-                var salaryNodeList = employee.SelectNodes("salary");
 
+                var salaryNodeList = employee.SelectNodes("salary");
                 if (salaryNodeList == null)
                     return;
 
                 foreach (XmlNode salary in salaryNodeList)
                 {
                     var amountAttribute = salary.Attributes?["amount"];
-
                     if (amountAttribute == null)
                         return;
 
@@ -60,34 +56,30 @@ namespace XSLT
 
                 var totalAmountAttribute = doc.CreateAttribute("totalAmount");
                 totalAmountAttribute.Value = sum.ToString();
-
                 employeeAttributes.Append(totalAmountAttribute);
             }
 
             doc.Save(path);
         }
 
-        public void AddTotalAmountToPay(string path)
+        private void AddTotalAmountToPay(string path)
         {
             var doc = new XmlDocument();
             doc.Load(path);
 
             var documentElement = doc.DocumentElement;
-
             if (documentElement == null)
                 return;
 
             double totalAmount = 0;
 
             var itemNodeList = doc.SelectNodes("//item");
-
             if (itemNodeList == null)
                 return;
 
             foreach (XmlNode item in itemNodeList)
             {
                 var amountAttribute = item.Attributes?["amount"];
-
                 if (amountAttribute == null)
                     return;
 
@@ -96,13 +88,13 @@ namespace XSLT
 
                 var totalAmountAttribute = doc.CreateAttribute("totalAmount");
                 totalAmountAttribute.Value = totalAmount.ToString();
-
                 documentElement.Attributes.Append(totalAmountAttribute);
+
                 doc.Save(path);
             }
         }
 
-        public void ShowData()
+        private void ShowData()
         {
             EmployeeListBox.Items.Clear();
             MonthDataGridView.Rows.Clear();
