@@ -100,7 +100,9 @@ namespace XSLT
 
         private void TransformButton_Click(object sender, EventArgs e)
         {
-
+            TransformXML(_inputPath, _outputPath, _xsltPath);
+            AddSumToEmployees(_outputPath);
+            AddTotalAmountToPay(_inputPath);
         }
     }
 }

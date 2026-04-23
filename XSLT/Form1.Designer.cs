@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             TransformButton = new Button();
+            EmployeeListBox = new ListBox();
+            MonthDataGridView = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)MonthDataGridView).BeginInit();
             SuspendLayout();
             // 
             // TransformButton
@@ -41,19 +44,41 @@
             TransformButton.UseVisualStyleBackColor = true;
             TransformButton.Click += TransformButton_Click;
             // 
+            // EmployeeListBox
+            // 
+            EmployeeListBox.FormattingEnabled = true;
+            EmployeeListBox.Location = new Point(12, 86);
+            EmployeeListBox.Name = "EmployeeListBox";
+            EmployeeListBox.Size = new Size(444, 584);
+            EmployeeListBox.TabIndex = 1;
+            // 
+            // MonthDataGridView
+            // 
+            MonthDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            MonthDataGridView.Location = new Point(474, 86);
+            MonthDataGridView.Name = "MonthDataGridView";
+            MonthDataGridView.RowHeadersWidth = 51;
+            MonthDataGridView.Size = new Size(551, 584);
+            MonthDataGridView.TabIndex = 2;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1037, 682);
+            Controls.Add(MonthDataGridView);
+            Controls.Add(EmployeeListBox);
             Controls.Add(TransformButton);
             Name = "Form1";
             Text = "XSLT Преобразование";
+            ((System.ComponentModel.ISupportInitialize)MonthDataGridView).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button TransformButton;
+        private ListBox EmployeeListBox;
+        private DataGridView MonthDataGridView;
     }
 }
