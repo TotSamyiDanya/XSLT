@@ -7,9 +7,9 @@ namespace XSLT
 {
     public partial class Form1 : Form
     {
-        private readonly string _inputPath = "..\\..\\..\\Data1.xml";
-        private readonly string _outputPath = "..\\..\\..\\Employees.xml";
-        private readonly string _xsltPath = "..\\..\\..\\Transform.xslt";
+        private readonly string _inputPath = "..\\..\\..\\Data\\Data1.xml";
+        private readonly string _outputPath = "..\\..\\..\\Data\\Employees.xml";
+        private readonly string _xsltPath = "..\\..\\..\\Data\\Transform.xslt";
 
         public Form1()
         {
@@ -63,6 +63,8 @@ namespace XSLT
 
                 employeeAttributes.Append(totalAmountAttribute);
             }
+
+            doc.Save(path);
         }
 
         public void AddTotalAmountToPay(string path)
@@ -112,7 +114,7 @@ namespace XSLT
             {
                 var name = employee.Attribute("name")?.Value ?? "";
                 var surname = employee.Attribute("surname")?.Value ?? "";
-                var sumSalary = employee.Attribute("sumSalary")?.Value ?? "0";
+                var sumSalary = employee.Attribute("totalAmount")?.Value ?? "0";
 
                 string displayText = $"{name} {surname} - {sumSalary}";
                 EmployeeListBox.Items.Add(displayText);
